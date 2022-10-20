@@ -46,7 +46,7 @@ const expirationDatePattern = {
 
 const expirationDateMasked = IMask(expirationDate, expirationDatePattern)
 
-const cardNumberPatter = {
+const cardNumberPattern = {
  mask: [
         {
             mask: '0000 000000 00000',
@@ -96,5 +96,21 @@ const cardNumberPatter = {
     ],
     dispatch: function (appended, dynamicMasked) {
      const number = (dynamicMasked.value + appended).replace(/\D/g, "")
+     const foundMask = dynamicMasked.compiledMasks.find(function(item) {
+         return number.match(item.regex)
+     })
+
+      return foundMask
     },
 }
+
+const cardNumberMasked = IMask(cardNumber, cardNumberPattern)
+
+const addButton = document.querySelector("add-card")
+addButton.addEventListener("click", () => {
+    alert("Cartao Adicionado")
+})
+
+document.querySelector("form").addEventListener("submit", (event) => {
+    event.preventDefault()
+})
